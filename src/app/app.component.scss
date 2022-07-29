@@ -1,0 +1,21 @@
+.main-container {
+  max-width: 1600px;
+  margin: 15px auto;
+
+  flex-grow: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  > * {
+    flex: 1;
+  }
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: space-between;
+}

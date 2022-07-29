@@ -1,0 +1,46 @@
+<form [formGroup]="form">
+  <div class="login-container">
+    <mat-card>
+      <mat-card-title color="secondary" class="my-3">Entrar</mat-card-title>
+      <mat-card-content>
+        <div class="d-flex flex-column">
+          <mat-form-field appearance="fill" class="mb-2">
+            <mat-label>Digite seu e-mail</mat-label>
+            <input matInput formControlName="email" required />
+            <mat-error *ngIf="form.get('email')?.untouched"
+              >Campo obrigatório</mat-error
+            >
+            <mat-error *ngIf="form.get('email')?.touched"
+              >Preencha o campo corretamente</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Digite sua senha</mat-label>
+            <input
+              matInput
+              [type]="hide ? 'password' : 'text'"
+              formControlName="password"
+              required
+            />
+            <mat-icon matSuffix (click)="toggleShowPass()">
+              {{ hide ? "visibility_off" : "visibility" }}
+            </mat-icon>
+            <mat-error *ngIf="form.get('email')?.untouched"
+              >Campo obrigatório</mat-error
+            >
+            <mat-error *ngIf="form.get('email')?.touched"
+              >Preencha o campo corretamente</mat-error
+            >
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+      <button mat-raised-button color="primary" type="submit">ENTRAR</button>
+      <mat-card-footer>
+        <mat-progress-bar
+          mode="indeterminate"
+          *ngIf="!loaded"
+        ></mat-progress-bar>
+      </mat-card-footer>
+    </mat-card>
+  </div>
+</form>

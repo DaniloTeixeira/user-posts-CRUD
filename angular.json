@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "user-posts-crud": {
+    "auth-crud-angular": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/user-posts-crud",
+            "outputPath": "dist/auth-crud-angular",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -72,10 +72,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "user-posts-crud:build:production"
+              "browserTarget": "auth-crud-angular:build:production"
             },
             "development": {
-              "browserTarget": "user-posts-crud:build:development"
+              "browserTarget": "auth-crud-angular:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -83,7 +83,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "user-posts-crud:build"
+            "browserTarget": "auth-crud-angular:build"
           }
         },
         "test": {
@@ -107,5 +107,7 @@
       }
     }
   },
-  "defaultProject": "user-posts-crud"
+  "cli": {
+    "analytics": false
+  }
 }
