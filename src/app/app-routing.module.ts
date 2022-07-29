@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './core/pages/home/home.component';
-import { LoginComponent } from './core/pages/login/login.component';
 import { NotFoundComponent } from './core/pages/not-found/not-found.component';
 
 const routes: Routes = [
@@ -14,13 +13,15 @@ const routes: Routes = [
     path: 'inicio',
     component: HomeComponent,
   },
-  {
-    path: 'entrar',
-    component: LoginComponent,
-  },
+
   {
     path: 'pagina-nao-encontrada',
     component: NotFoundComponent,
+  },
+  {
+    path: 'autenticacao',
+    loadChildren: () =>
+      import('./core/modules/auth/auth.module').then((m) => m.AuthModule),
   },
   {
     path: '**',
