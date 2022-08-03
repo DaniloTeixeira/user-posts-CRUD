@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { NotificationService } from 'src/app/core/services/notification';
+import { FormValidator } from 'src/app/core/utils/form-validators';
 import { CreateUserPayload } from '../../interfaces/CreateUserPayload';
 
 @Component({
@@ -16,10 +18,15 @@ export class CreateUserComponent implements OnInit {
 
   destroy$ = new Subject<void>();
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private notification: NotificationService
+  ) {}
 
   ngOnInit(): void {
     this.buildForm();
+
+    this.notification.success('Usuário criado com sucesso!');
   }
 
   ngOnDestroy(): void {
@@ -49,10 +56,10 @@ export class CreateUserComponent implements OnInit {
         [
           Validators.minLength(6),
           Validators.required,
-          this.confirmPasswordValidator(),
+          FormValidator.equalsTo('password'),
         ],
       ],
-      accessType: [null, [Validators.required]],
+      accessType: [null, [Validators.required], ,],
     });
   }
 
@@ -64,20 +71,6 @@ export class CreateUserComponent implements OnInit {
       email: form.email,
       password: form.password,
       accessType: form.accessType,
-    };
-  }
-
-  private confirmPasswordValidator(): Validators {
-    return (confirmPasswordControl: FormGroup) => {
-      const confirmPasswordValue = confirmPasswordControl.value;
-      const passwordValue = this.form?.get('password')?.value;
-
-      if (!passwordValue) {
-        return null;
-      }
-      return confirmPasswordValue === passwordValue
-        ? null
-        : { differentPass: true };
     };
   }
 }

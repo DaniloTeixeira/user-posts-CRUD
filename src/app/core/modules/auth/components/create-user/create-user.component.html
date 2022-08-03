@@ -5,85 +5,88 @@
         arrow_back_ios
       </mat-icon>
       <mat-card-title color="secondary" class="my-2">Cadastrar</mat-card-title>
+      <mat-card-subtitle>Escolha o tipo do cadastro</mat-card-subtitle>
       <mat-card-content>
-        <h6>Escolha o tipo do cadastro</h6>
         <mat-radio-group
           class="d-flex justify-content-around mb-2"
           formControlName="accessType"
-          required
         >
           <mat-radio-button value="admin"> Administrador </mat-radio-button>
           <mat-radio-button value="user"> Usuário </mat-radio-button>
         </mat-radio-group>
 
-        <div class="d-flex flex-column">
-          <mat-form-field appearance="fill" class="mb-2">
-            <mat-label>Digite seu nome</mat-label>
-            <input matInput formControlName="name" />
-            <mat-error *ngIf="form.get('name')?.untouched"
-              >Campo obrigatório</mat-error
-            >
-            <mat-error *ngIf="form.get('name')?.touched"
-              >Preencha o campo corretamente</mat-error
-            >
-          </mat-form-field>
+        <ng-container *ngIf="form.get('accessType')?.value">
+          <div class="d-flex flex-column">
+            <mat-form-field appearance="fill" class="mb-2">
+              <mat-label>Digite seu nome</mat-label>
+              <input matInput formControlName="name" />
+              <mat-error *ngIf="form.get('name')?.untouched"
+                >Campo obrigatório</mat-error
+              >
+              <mat-error *ngIf="form.get('name')?.touched"
+                >Preencha o campo corretamente</mat-error
+              >
+            </mat-form-field>
 
-          <mat-form-field appearance="fill" class="mb-2">
-            <mat-label>Digite seu e-mail</mat-label>
-            <input matInput formControlName="email" />
-            <mat-error *ngIf="form.get('email')?.untouched">
-              Campo obrigatório
-            </mat-error>
-            <mat-error *ngIf="form.get('email')?.touched">
-              Preencha o campo corretamente
-            </mat-error>
-          </mat-form-field>
+            <mat-form-field appearance="fill" class="mb-2">
+              <mat-label>Digite seu e-mail</mat-label>
+              <input matInput formControlName="email" />
+              <mat-error *ngIf="form.get('email')?.untouched">
+                Campo obrigatório
+              </mat-error>
+              <mat-error *ngIf="form.get('email')?.touched">
+                Preencha o campo corretamente
+              </mat-error>
+            </mat-form-field>
 
-          <mat-form-field appearance="fill" class="mb-2">
-            <mat-label>Digite sua senha</mat-label>
-            <input
-              matInput
-              [type]="hide ? 'password' : 'text'"
-              formControlName="password"
-            />
-            <mat-icon matSuffix (click)="toggleShowPass()">
-              {{ hide ? "visibility_off" : "visibility" }}
-            </mat-icon>
+            <mat-form-field appearance="fill" class="mb-2">
+              <mat-label>Digite sua senha</mat-label>
+              <input
+                matInput
+                [type]="hide ? 'password' : 'text'"
+                formControlName="password"
+              />
+              <mat-icon matSuffix (click)="toggleShowPass()">
+                {{ hide ? "visibility_off" : "visibility" }}
+              </mat-icon>
 
-            <mat-error *ngIf="form.get('password')?.untouched">
-              Campo obrigatório
-            </mat-error>
-            <mat-error *ngIf="form.get('password')?.touched">
-              A senha deve conter ao menos 6 caracteres
-            </mat-error>
-          </mat-form-field>
+              <mat-error *ngIf="form.get('password')?.untouched">
+                Campo obrigatório
+              </mat-error>
+              <mat-error *ngIf="form.get('password')?.touched">
+                A senha deve conter ao menos 6 caracteres
+              </mat-error>
+            </mat-form-field>
 
-          <mat-form-field appearance="fill">
-            <mat-label>Confirme sua senha</mat-label>
-            <input
-              matInput
-              [type]="hide ? 'password' : 'text'"
-              formControlName="confirmPassword"
-            />
-            <mat-error *ngIf="form.get('confirmPassword')?.untouched">
-              Campo obrigatório
-            </mat-error>
+            <mat-form-field appearance="fill">
+              <mat-label>Confirme sua senha</mat-label>
+              <input
+                matInput
+                [type]="hide ? 'password' : 'text'"
+                formControlName="confirmPassword"
+              />
+              <mat-error *ngIf="form.get('confirmPassword')?.untouched">
+                Campo obrigatório
+              </mat-error>
 
-            <mat-error
-              *ngIf="form.get('confirmPassword')?.hasError('differentPass')"
-            >
-              As senhas não coincidem
-            </mat-error>
-          </mat-form-field>
-        </div>
+              <mat-error
+                *ngIf="form.get('confirmPassword')?.hasError('differentValue')"
+              >
+                As senhas não coincidem
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </ng-container>
       </mat-card-content>
-      <button mat-raised-button color="primary" type="submit">SALVAR</button>
-      <mat-card-footer>
-        <mat-progress-bar
-          mode="indeterminate"
-          *ngIf="!loaded"
-        ></mat-progress-bar>
-      </mat-card-footer>
+      <ng-container *ngIf="form.get('accessType')?.value">
+        <button mat-raised-button color="primary" type="submit">SALVAR</button>
+        <mat-card-footer>
+          <mat-progress-bar
+            mode="indeterminate"
+            *ngIf="!loaded"
+          ></mat-progress-bar>
+        </mat-card-footer>
+      </ng-container>
     </mat-card>
   </div>
 </form>
