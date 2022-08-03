@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  styleUrls: ['../../auth.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
   form!: FormGroup;
@@ -26,14 +26,22 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  onSubmit(): void {
+    console.log(this.getLoginPayload());
+  }
+
   toggleShowPass(): void {
     this.hide = !this.hide;
   }
 
   private buildForm(): void {
     this.form = this.fb.group({
-      email: [null, Validators.email],
-      password: [null, Validators.minLength(6)],
+      email: [null, [Validators.email, Validators.required]],
+      password: [null, [Validators.minLength(6), Validators.required]],
     });
+  }
+
+  private getLoginPayload(): any {
+    return this.form.getRawValue();
   }
 }

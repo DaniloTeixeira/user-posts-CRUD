@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { AuthComponent } from './auth.component';
-import { CreateUserComponent } from './components/create-user';
 import { LoginComponent } from './components/login';
+import { CreateUserComponent } from './components/create-user';
 
 const routes: Routes = [
   {
-    path: 'autenticacao',
+    path: '',
     pathMatch: 'full',
-    redirectTo: 'autenticacao/entrar',
+    redirectTo: 'entrar',
   },
   {
-    path: 'autenticacao',
+    path: '',
     component: AuthComponent,
     children: [
       { path: 'entrar', component: LoginComponent },
