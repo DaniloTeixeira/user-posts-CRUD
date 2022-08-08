@@ -1,9 +1,14 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
+import { AuthService } from 'src/app/core/services/auth';
+import { LoaderService } from 'src/app/core/services/auth/loader';
 import { NotificationService } from 'src/app/core/services/notification';
 import { FormValidator } from 'src/app/core/utils/form-validators';
+import { AccessType } from '../../components/login/types/AccessType';
 import { CreateUserPayload } from '../../interfaces/CreateUserPayload';
+import { User } from '../../interfaces/User';
 
 @Component({
   selector: 'app-create-user',
@@ -12,21 +17,21 @@ import { CreateUserPayload } from '../../interfaces/CreateUserPayload';
 })
 export class CreateUserComponent implements OnInit {
   form!: FormGroup;
+  user!: User;
 
   hide = true;
-  loaded = true;
+  loading = false;
 
   destroy$ = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
+    private authService: AuthService,
     private notification: NotificationService
   ) {}
 
   ngOnInit(): void {
     this.buildForm();
-
-    this.notification.success('Usuário criado com sucesso!');
   }
 
   ngOnDestroy(): void {
@@ -39,7 +44,7 @@ export class CreateUserComponent implements OnInit {
       return;
     }
 
-    console.log(this.getCreateUserPayload());
+    this.createUser();
   }
 
   toggleShowPass(): void {
@@ -59,7 +64,7 @@ export class CreateUserComponent implements OnInit {
           FormValidator.equalsTo('password'),
         ],
       ],
-      accessType: [null, [Validators.required], ,],
+      accessType: [null, Validators.required],
     });
   }
 
@@ -72,5 +77,30 @@ export class CreateUserComponent implements OnInit {
       password: form.password,
       accessType: form.accessType,
     };
+  }
+
+  private getAccessType(): AccessType {
+    const accessType = this.form.get('accessType')?.value;
+
+    return accessType === 'admin' ? 'Administrador' : 'Usuário';
+  }
+
+  private createUser(): void {
+    const accessType = this.getAccessType();
+    this.loading = true;
+
+    this.authService
+      .createUser(this.getCreateUserPayload())
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          this.notification.success(`${accessType} criado com sucesso!`);
+          this.user = response;
+          this.loading = false;
+        },
+        error: () => {
+          this.loading = false;
+        },
+      });
   }
 }
