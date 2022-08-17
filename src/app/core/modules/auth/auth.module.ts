@@ -15,14 +15,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
+import { ComponentsModule } from '../../components/components.module';
 import { LoginComponent } from './pages/login';
 import { CreateUserComponent } from './pages/create-user';
-import { ComponentsModule } from '../../components/components.module';
 
-const COMPONENTS = [AuthComponent, LoginComponent, CreateUserComponent];
+const components = [AuthComponent, LoginComponent, CreateUserComponent];
 
 @NgModule({
-  declarations: [...COMPONENTS],
+  declarations: [...components],
   imports: [
     CommonModule,
     AuthRoutingModule,
@@ -40,6 +40,6 @@ const COMPONENTS = [AuthComponent, LoginComponent, CreateUserComponent];
     MatInputModule,
     MatRadioModule,
   ],
-  exports: [...COMPONENTS],
+  exports: [...components],
 })
 export class AuthModule {}

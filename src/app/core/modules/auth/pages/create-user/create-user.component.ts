@@ -1,14 +1,12 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { AuthService } from 'src/app/core/services/auth';
-import { LoaderService } from 'src/app/core/services/auth/loader';
 import { NotificationService } from 'src/app/core/services/notification';
+import { AccessType } from 'src/app/core/types/AccessType';
 import { FormValidator } from 'src/app/core/utils/form-validators';
-import { AccessType } from '../../components/login/types/AccessType';
 import { CreateUserPayload } from '../../interfaces/CreateUserPayload';
 import { User } from '../../interfaces/User';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-create-user',

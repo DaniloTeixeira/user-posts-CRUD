@@ -1,4 +1,4 @@
-import { AccessType } from '../components/login/types/AccessType';
+import { AccessType } from 'src/app/core/types/AccessType';
 
 export interface CreateUserPayload {
   name: string;

@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import endpoints from 'src/environments/endpoints';
-import { CreateUserPayload } from '../../modules/auth/interfaces/CreateUserPayload';
-import { User } from '../../modules/auth/interfaces/User';
+import { CreateUserPayload } from '../../interfaces/CreateUserPayload';
+import { User } from '../../interfaces/User';
 
 @Injectable({
   providedIn: 'root',
