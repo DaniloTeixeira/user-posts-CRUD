@@ -10,6 +10,7 @@ import { NotFoundComponent } from './core/pages/not-found';
 import { AuthModule } from './core/modules/auth/auth.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, NotFoundComponent],
@@ -21,6 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
 
     ToastrModule.forRoot(),
+    StoreModule.forRoot({}),
   ],
   providers: [],
   bootstrap: [AppComponent],
