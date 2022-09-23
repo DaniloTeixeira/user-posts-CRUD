@@ -1,4 +1,18 @@
-.header-content {
-  background-color: rgba(0, 0, 0, 0.2);
-  height: 100px;
+.menu-container {
+  position: absolute;
+  top: 2px;
+  left: 95vw;
+  width: fit-content;
+  height: fit-content;
+  z-index: 5;
+  color: #ffc1da;
+  transition: 0.2s;
+
+  &:hover {
+    color: #fff;
+  }
+
+  @media screen and (max-width: 820px) {
+    left: 85vw;
+  }
 }

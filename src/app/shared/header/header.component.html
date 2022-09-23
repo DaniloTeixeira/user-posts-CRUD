@@ -1,1 +1,32 @@
-<div class="header-content">teste</div>
+<mat-tab-group
+  backgroundColor="primary"
+  (selectedTabChange)="onTabChange($event)"
+>
+  <mat-tab label="Início"> </mat-tab>
+  <mat-tab label="Usuários"> </mat-tab>
+  <mat-tab label="Postagens"> </mat-tab>
+</mat-tab-group>
+
+<div class="menu-container">
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="menu"
+    aria-label="Example icon-button with a menu"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>login</mat-icon>
+      <span>Entrar</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>logout</mat-icon>
+      <span>Sair</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>settings</mat-icon>
+      <span>Gerenciar Usuários</span>
+    </button>
+  </mat-menu>
+</div>
