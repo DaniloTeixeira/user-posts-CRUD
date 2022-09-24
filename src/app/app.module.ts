@@ -14,6 +14,7 @@ import { StoreModule } from '@ngrx/store';
 import { MaterialModule } from './shared/material/material.module';
 import { PostsComponent } from './core/pages/posts';
 import { UsersComponent } from './core/pages/users';
+import { SettingsComponent } from './core/pages/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { UsersComponent } from './core/pages/users';
     NotFoundComponent,
     PostsComponent,
     UsersComponent,
+    SettingsComponent,
   ],
   imports: [
     SharedModule,
