@@ -23,9 +23,6 @@
               <mat-error *ngIf="form.get('name')?.hasError('required')"
                 >Campo obrigatório</mat-error
               >
-              <mat-error *ngIf="form.get('name')?.touched"
-                >Preencha o campo corretamente</mat-error
-              >
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="mb-2">
@@ -34,7 +31,7 @@
               <mat-error *ngIf="form.get('name')?.hasError('required')"
                 >Campo obrigatório</mat-error
               >
-              <mat-error *ngIf="form.get('email')?.touched">
+              <mat-error *ngIf="form.get('email')?.hasError('email')">
                 Preencha o campo corretamente
               </mat-error>
             </mat-form-field>
@@ -52,7 +49,7 @@
               <mat-error *ngIf="form.get('name')?.hasError('required')"
                 >Campo obrigatório</mat-error
               >
-              <mat-error *ngIf="form.get('password')?.touched">
+              <mat-error *ngIf="form.get('password')?.hasError('minlength')">
                 A senha deve conter ao menos 6 caracteres
               </mat-error>
             </mat-form-field>

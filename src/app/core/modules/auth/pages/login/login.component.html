@@ -7,10 +7,10 @@
           <mat-form-field appearance="fill" class="mb-2">
             <mat-label>Digite seu e-mail</mat-label>
             <input matInput formControlName="email" />
-            <mat-error *ngIf="form.get('name')?.hasError('required')"
+            <mat-error *ngIf="form.get('email')?.hasError('required')"
               >Campo obrigatório</mat-error
             >
-            <mat-error *ngIf="form.get('email')?.touched">
+            <mat-error *ngIf="form.get('email')?.hasError('email')">
               Preencha o campo corretamente
             </mat-error>
           </mat-form-field>
@@ -25,10 +25,10 @@
             <mat-icon matSuffix (click)="toggleShowPass()">
               {{ hide ? "visibility_off" : "visibility" }}
             </mat-icon>
-            <mat-error *ngIf="form.get('name')?.hasError('required')"
+            <mat-error *ngIf="form.get('password')?.hasError('required')"
               >Campo obrigatório</mat-error
             >
-            <mat-error *ngIf="form.get('email')?.touched">
+            <mat-error *ngIf="form.get('password')?.hasError('minlength')">
               Preencha o campo corretamente
             </mat-error>
           </mat-form-field>
