@@ -1,18 +1,85 @@
-.menu-container {
+// .menu-container {
+//   position: absolute;
+//   top: 2px;
+//   left: 95vw;
+//   width: fit-content;
+//   height: fit-content;
+//   z-index: 5;
+//   color: #ffc1da;
+//   transition: 0.2s;
+
+//   &:hover {
+//     color: #fff;
+//   }
+
+//   @media screen and (max-width: 820px) {
+//     left: 85vw;
+//   }
+// }
+
+mat-toolbar {
   position: absolute;
-  top: 2px;
-  left: 95vw;
-  width: fit-content;
-  height: fit-content;
-  z-index: 5;
-  color: #ffc1da;
-  transition: 0.2s;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+.example-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 150px;
+  background-color: transparent;
+}
+
+.example-sidenav {
+  width: 150px;
+  background-color: #c2185b;
+}
+
+.example-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-sidenav {
+  padding: 20px;
+}
+
+p {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: #ffdae9;
+  border-bottom: 1px solid #d24f84;
 
   &:hover {
     color: #fff;
+    border-bottom: 1px solid #fff;
   }
+}
 
-  @media screen and (max-width: 820px) {
-    left: 85vw;
+span {
+  margin-left: 15px;
+}
+
+p,
+span {
+  font-size: 13px;
+  cursor: pointer;
+}
+
+mat-icon:not(.menu-icon) {
+  font-size: 20px;
+}
+
+.menu-icon {
+  color: #ffdae9;
+  &:hover {
+    color: #fff;
   }
 }

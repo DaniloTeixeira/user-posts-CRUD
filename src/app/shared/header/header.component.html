@@ -1,4 +1,48 @@
-<mat-tab-group
+<mat-toolbar color="primary" class="mat-elevation-z6">
+  <button mat-icon-button (click)="drawer.toggle()">
+    <mat-icon class="menu-icon">menu</mat-icon>
+  </button>
+  <div class="d-flex justify-content-center" style="width: 100%">
+    <h6>Auth + CRUD (Angular e NodeJS Prisma)</h6>
+  </div>
+  <span class="example-spacer"></span>
+</mat-toolbar>
+
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+    <p routerLink="/autenticacao/entrar">
+      <mat-icon>login</mat-icon>
+      <span>Entrar</span>
+    </p>
+
+    <p routerLink="/autenticacao/entrar">
+      <mat-icon>logout</mat-icon>
+      <span>Sair</span>
+    </p>
+
+    <p>
+      <mat-icon>home</mat-icon>
+      <span>Início</span>
+    </p>
+
+    <p>
+      <mat-icon>person</mat-icon>
+      <span>Usuários</span>
+    </p>
+
+    <p>
+      <mat-icon>chat</mat-icon>
+      <span>Postagens</span>
+    </p>
+
+    <p>
+      <mat-icon>manage_accounts</mat-icon>
+      <span>Gerenciar</span>
+    </p>
+  </mat-drawer>
+</mat-drawer-container>
+
+<!-- <mat-tab-group
   backgroundColor="primary"
   (selectedTabChange)="onTabChange($event)"
 >
@@ -29,4 +73,4 @@
       <span>Gerenciar Usuários</span>
     </button>
   </mat-menu>
-</div>
+</div> -->

@@ -10,6 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   exports: [
@@ -23,6 +25,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatRadioModule,
     MatTabsModule,
     MatMenuModule,
+    MatToolbarModule,
+    MatSidenavModule,
   ],
 })
 export class MaterialModule {}
