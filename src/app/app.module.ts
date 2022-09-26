@@ -15,6 +15,7 @@ import { MaterialModule } from './shared/material/material.module';
 import { PostsComponent } from './core/pages/posts';
 import { UsersComponent } from './core/pages/users';
 import { SettingsComponent } from './core/pages/settings/settings.component';
+import { ComponentsModule } from './core/components/components.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { SettingsComponent } from './core/pages/settings/settings.component';
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
+    ComponentsModule,
 
     ToastrModule.forRoot(),
     StoreModule.forRoot({}),

@@ -12,6 +12,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   exports: [
@@ -27,6 +28,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatMenuModule,
     MatToolbarModule,
     MatSidenavModule,
+    MatTableModule,
   ],
 })
 export class MaterialModule {}

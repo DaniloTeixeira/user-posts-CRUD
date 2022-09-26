@@ -1,1 +1,57 @@
-<p>users works!</p>
+<ng-container *ngIf="users">
+  <mat-form-field appearance="standard">
+    <mat-label>Filtro</mat-label>
+    <input matInput (keyup)="applyFilter($event)" #input />
+  </mat-form-field>
+
+  <table mat-table [dataSource]="users" class="mat-elevation-z8 w-100">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>#</th>
+      <td mat-cell *matCellDef="let user">{{ user.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Nome</th>
+      <td mat-cell *matCellDef="let user">{{ user.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>E-mail</th>
+      <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="accessType">
+      <th mat-header-cell *matHeaderCellDef>Tipo de acesso</th>
+      <td mat-cell *matCellDef="let user">{{ user.accessType }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="createdAt">
+      <th mat-header-cell *matHeaderCellDef>Criado em</th>
+      <td mat-cell *matCellDef="let user">{{ user.created_at }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Ações</th>
+      <td mat-cell *matCellDef="let user" class="d-flex">
+        <button mat-icon-button style="color: #699deb">
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button mat-icon-button style="color: #e30d00">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    <ng-container *ngIf="loading">
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell no-data-row" colspan="6">
+          Nenhum usuário encontrado
+        </td>
+      </tr>
+    </ng-container>
+  </table>
+</ng-container>
