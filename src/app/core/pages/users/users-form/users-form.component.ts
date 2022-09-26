@@ -68,6 +68,10 @@ export class UsersFormComponent implements OnInit, OnDestroy {
     });
   }
 
+  private noDataChanged(user: any): boolean {
+    return user.name === this.user.name && user.email === this.user.email;
+  }
+
   private fillform(): void {
     this.form?.patchValue({
       name: this.user.name,
@@ -87,6 +91,12 @@ export class UsersFormComponent implements OnInit, OnDestroy {
   private editUser(): void {
     const payload = this.getEditUserPayload();
     const id = this.user.id;
+    const noDataChanged = this.noDataChanged(payload);
+
+    if (noDataChanged) {
+      this.notification.info('Altere algum dado para prosseguir.');
+      return;
+    }
 
     this.loader.show('Alterando dados do usuário...');
 
