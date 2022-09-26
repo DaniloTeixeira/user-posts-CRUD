@@ -1,6 +1,6 @@
 <mat-toolbar color="primary" class="mat-elevation-z6">
   <button mat-icon-button (click)="drawer.toggle()">
-    <mat-icon class="menu-icon me-2">menu</mat-icon>
+    <mat-icon class="menu-icon m-2">menu</mat-icon>
   </button>
   <div class="d-flex justify-content-center" style="width: 100%">
     <h6>Auth + CRUD (Angular e NodeJS)</h6>
@@ -9,7 +9,7 @@
 </mat-toolbar>
 
 <mat-drawer-container class="example-container" autosize>
-  <mat-drawer #drawer class="example-sidenav" mode="side">
+  <mat-drawer #drawer class="example-sidenav" mode="side" [opened]="true">
     <p routerLink="/autenticacao/entrar">
       <mat-icon>login</mat-icon>
       <span>Entrar</span>

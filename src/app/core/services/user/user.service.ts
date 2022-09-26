@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { delay, Observable } from 'rxjs';
 import endpoints from 'src/environments/endpoints';
-import { EditUserPayload } from '../../models/EditUserPayload';
+import { EditUserPayload } from '../../models/EditUser';
 import { User } from '../../models/User';
 
 @Injectable({
@@ -23,7 +23,8 @@ export class UserService {
     return this.http.get<User>(url).pipe(delay(500));
   }
   editUser(id: number, payload: EditUserPayload): Observable<User> {
-    const url = `${this.baseURL}/${id}`;
+    const baseURL = endpoints.user;
+    const url = `${baseURL}/${id}`;
 
     return this.http.put<User>(url, payload).pipe(delay(500));
   }

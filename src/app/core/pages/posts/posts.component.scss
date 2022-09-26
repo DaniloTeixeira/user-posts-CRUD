@@ -1,0 +1,29 @@
+/* Structure */
+table {
+  min-width: 80vw;
+  max-width: 90vw;
+  margin: 0 auto;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+tr.mat-row {
+  height: unset;
+}
+
+td.mat-cell {
+  padding: 5px;
+  color: whitesmoke;
+}
+
+td.mat-cell.no-data-row {
+  text-align: center;
+}
+
+table {
+  border-radius: 5px;
+  overflow: hidden !important;
+}

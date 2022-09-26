@@ -16,6 +16,8 @@ import { PostsComponent } from './core/pages/posts';
 import { UsersComponent } from './core/pages/users';
 import { SettingsComponent } from './core/pages/settings/settings.component';
 import { ComponentsModule } from './core/components/components.module';
+import { UsersFormComponent } from './core/pages/users/users-form/users-form.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { ComponentsModule } from './core/components/components.module';
     PostsComponent,
     UsersComponent,
     SettingsComponent,
+    UsersFormComponent,
   ],
   imports: [
     SharedModule,
@@ -34,6 +37,8 @@ import { ComponentsModule } from './core/components/components.module';
     BrowserAnimationsModule,
     MaterialModule,
     ComponentsModule,
+    FormsModule,
+    ReactiveFormsModule,
 
     ToastrModule.forRoot(),
     StoreModule.forRoot({}),

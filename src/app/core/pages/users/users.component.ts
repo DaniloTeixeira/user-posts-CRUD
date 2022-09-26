@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { Subject, takeUntil } from 'rxjs';
@@ -8,6 +9,7 @@ import { User } from '../../models/User';
 import { LoaderService } from '../../services/loader';
 import { NotificationService } from '../../services/notification';
 import { UserService } from '../../services/user';
+import { UsersFormComponent } from './users-form';
 
 @Component({
   selector: 'app-users',
@@ -31,8 +33,9 @@ export class UsersComponent implements OnInit, OnDestroy {
   loading = false;
 
   constructor(
-    private userService: UserService,
+    private dialog: MatDialog,
     private loader: LoaderService,
+    private userService: UserService,
     private notification: NotificationService
   ) {}
 
@@ -45,9 +48,36 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.destroyed$.complete();
   }
 
+  openDialog(user: User): void {
+    // TODO -> Validar se é administrador
+
+    const data: any = {
+      user: user,
+    };
+
+    const dialogRef = this.dialog.open(UsersFormComponent, {
+      width: '350px',
+      maxHeight: '600px',
+      data,
+    });
+
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((params) => {
+        if (params?.reload) {
+          this.getUsers();
+        }
+      });
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.users.filter = filterValue.trim().toLowerCase();
+  }
+
+  deleteUser(user: User): void {
+    console.log(user.id);
   }
 
   private getUsers(): void {

@@ -77,7 +77,7 @@ export class CreateUserComponent implements OnInit {
     };
   }
 
-  private getAccessType(): AccessType {
+  private getAccessType(): string {
     const accessType = this.form.get('accessType')?.value;
 
     return accessType === 'admin' ? 'Administrador' : 'Usuário';

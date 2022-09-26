@@ -1,0 +1,40 @@
+<h1 mat-dialog-title class="text-center">Editar usuário</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="form">
+  <div mat-dialog-content>
+    <mat-form-field appearance="fill" class="w-100">
+      <mat-label class="text-muted">Nome</mat-label>
+      <input matInput type="text" formControlName="name" />
+      <mat-error *ngIf="form.controls.name.hasError('required')">
+        Campo nome é obrigatório
+      </mat-error>
+      <mat-error *ngIf="form.controls.name.hasError('minlength')">
+        Insira ao menos 3 caracteres
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="w-100">
+      <mat-label class="text-muted">E-mail</mat-label>
+      <input matInput type="text" formControlName="email" />
+      <mat-error *ngIf="form.controls.email.hasError('required')">
+        Campo e-mail é obrigatório
+      </mat-error>
+      <mat-error *ngIf="form.controls.email.hasError('email')">
+        Insira um e-mail válido
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-actions class="d-flex justify-content-between">
+    <button mat-stroked-button type="button" (click)="onCancel()">
+      Cancelar
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="this.form.invalid"
+    >
+      Salvar
+    </button>
+  </div>
+</form>
