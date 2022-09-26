@@ -5,5 +5,5 @@ export interface User {
   name: string;
   email: string;
   accessType: AccessType;
-  createdAt: string;
+  created_at: string;
 }

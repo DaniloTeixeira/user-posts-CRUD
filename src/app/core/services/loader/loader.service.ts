@@ -8,19 +8,19 @@ export class LoaderService {
   loaderText$ = new BehaviorSubject<string>('');
   showLoader$!: Observable<boolean>;
 
-  private openedLoaders$ = new BehaviorSubject<string[]>([]);
+  private openedLoader$ = new BehaviorSubject<string[]>([]);
 
   constructor() {
-    this.showLoader$ = this.openedLoaders$.pipe(map((n) => n.length > 0));
+    this.showLoader$ = this.openedLoader$.pipe(map((n) => n.length > 0));
   }
 
   show(loaderText: string): void {
-    this.loaderText$.next(loaderText ?? '');
-    this.openedLoaders$.next([...this.openedLoaders$.getValue(), loaderText]);
+    this.loaderText$.next(loaderText);
+    this.openedLoader$.next([...this.openedLoader$.getValue(), loaderText]);
   }
 
   hide(): void {
-    const [, ...loaders] = this.openedLoaders$.getValue();
-    this.openedLoaders$.next(loaders);
+    const [, ...loaders] = this.openedLoader$.getValue();
+    this.openedLoader$.next(loaders);
   }
 }

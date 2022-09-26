@@ -15,9 +15,12 @@ tr.mat-row {
 }
 
 td.mat-cell {
-  padding: 8px;
-  text-align: center;
+  padding: 5px;
   color: whitesmoke;
+}
+
+td.mat-cell.no-data-row {
+  text-align: center;
 }
 
 table {
