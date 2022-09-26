@@ -77,7 +77,22 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   deleteUser(user: User): void {
-    console.log(user.id);
+    this.loader.show('Apagando usuário...');
+
+    this.userService
+      .deleteUser(user.id)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe({
+        next: () => {
+          this.notification.success('Usuário apagado com sucesso!');
+          this.getUsers();
+        },
+        error: () =>
+          this.notification.info(
+            'Ops... Erro ao apagar usuário. Tente novamente.'
+          ),
+      })
+      .add(() => this.loader.hide());
   }
 
   private getUsers(): void {
@@ -91,7 +106,7 @@ export class UsersComponent implements OnInit, OnDestroy {
           this.users.data = users;
         },
         error: () =>
-          this.notification.warning(
+          this.notification.info(
             'Ops... Erro ao buscar usuários, contate o suporte.'
           ),
         complete: () => (this.loading = true),

@@ -30,7 +30,8 @@ export class UserService {
   }
 
   deleteUser(id: number): Observable<void> {
-    const url = `${this.baseURL}/${id}`;
+    const baseURL = endpoints.user;
+    const url = `${baseURL}/${id}`;
 
     return this.http.delete<void>(url).pipe(delay(500));
   }

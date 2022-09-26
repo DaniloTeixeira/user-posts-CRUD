@@ -1,3 +1,19 @@
+<div
+  class="title-container d-flex justify-content-between align-items-center mx-1"
+>
+  <h3 class="text-center text-muted">Usuários cadastrados</h3>
+  <button
+    mat-fab
+    color="primary"
+    matTooltip="Adicionar usuário"
+    routerLink="/autenticacao/cadastrar"
+  >
+    <mat-icon class="add-button" fontSet="material-icons-outlined"
+      >person_add</mat-icon
+    >
+  </button>
+</div>
+
 <ng-container *ngIf="users">
   <mat-form-field appearance="standard">
     <mat-label>Filtro</mat-label>
@@ -38,6 +54,7 @@
           style="color: #3366ff"
           type="button"
           (click)="openDialog(user)"
+          matTooltip="Editar usuário"
         >
           <mat-icon fontSet="material-icons-outlined">edit</mat-icon>
         </button>
@@ -47,6 +64,7 @@
           style="color: #e30d00"
           type="button"
           (click)="deleteUser(user)"
+          matTooltip="Apagar usuáro"
         >
           <mat-icon fontSet="material-icons-outlined">delete</mat-icon>
         </button>

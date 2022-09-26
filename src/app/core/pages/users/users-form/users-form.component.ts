@@ -89,8 +89,8 @@ export class UsersFormComponent implements OnInit, OnDestroy {
   }
 
   private editUser(): void {
-    const payload = this.getEditUserPayload();
     const id = this.user.id;
+    const payload = this.getEditUserPayload();
     const noDataChanged = this.noDataChanged(payload);
 
     if (noDataChanged) {
@@ -103,12 +103,18 @@ export class UsersFormComponent implements OnInit, OnDestroy {
     this.userService
       .editUser(id, payload)
       .pipe(takeUntil(this.destroyed$))
-      .subscribe(() => {
-        this.notification.success('Usuário alterado com sucesso!');
+      .subscribe({
+        next: () => {
+          this.notification.success('Usuário alterado com sucesso!');
 
-        this.dialogRef.close({
-          reload: true,
-        });
+          this.dialogRef.close({
+            reload: true,
+          });
+        },
+        error: () =>
+          this.notification.info(
+            'Ops... Erro ao atualizar usuário. Tente novamente.'
+          ),
       })
       .add(() => this.loader.hide());
   }
