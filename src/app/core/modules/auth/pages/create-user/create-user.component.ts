@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
+import { User } from 'src/app/core/models/User';
 import { NotificationService } from 'src/app/core/services/notification';
 import { AccessType } from 'src/app/core/types/AccessType';
 import { FormValidator } from 'src/app/core/utils/form-validators';
 import { CreateUserPayload } from '../../interfaces/CreateUserPayload';
-import { User } from '../../interfaces/User';
 import { AuthService } from '../../services/auth';
 
 @Component({
