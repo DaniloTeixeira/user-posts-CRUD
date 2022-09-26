@@ -1,8 +1,15 @@
-/* Structure */
+.title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 table {
   min-width: 80vw;
   max-width: 90vw;
   margin: 0 auto;
+  border-radius: 5px;
+  overflow: hidden !important;
 }
 
 .mat-form-field {
@@ -23,7 +30,6 @@ td.mat-cell.no-data-row {
   text-align: center;
 }
 
-table {
-  border-radius: 5px;
-  overflow: hidden !important;
+.add-button {
+  margin: 0 5px 5px 0;
 }

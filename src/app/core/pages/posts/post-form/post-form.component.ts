@@ -1,24 +1,11 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Subject, takeUntil } from 'rxjs';
-import { EditUserPayload } from 'src/app/core/models/EditUserPayload';
-import { User } from 'src/app/core/models/User';
-import { LoaderService } from 'src/app/core/services/loader';
-import { NotificationService } from 'src/app/core/services/notification';
-import { UserService } from 'src/app/core/services/user';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-users-form',
-  templateUrl: './users-form.component.html',
-  styleUrls: ['./users-form.component.scss'],
+  selector: 'app-post-form',
+  templateUrl: './post-form.component.html',
+  styleUrls: ['./post-form.component.scss'],
 })
-export class UsersFormComponent implements OnInit, OnDestroy {
+export class PostFormComponent implements OnInit {
   form?: FormGroup<{
     name: FormControl<string | null>;
     email: FormControl<string | null>;
