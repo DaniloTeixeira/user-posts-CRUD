@@ -42,3 +42,7 @@ mat-card {
 mat-label {
   color: #424242;
 }
+
+td.mat-cell:first-of-type {
+  padding-left: 24px !important;
+}

@@ -14,7 +14,10 @@
   align-items: center;
 
   p {
-    color: #c2185b;
+    color: #fff;
+    background-color: #c2185b;
+    border-radius: 20px;
+    padding: 8px 15px;
     font-weight: 500;
   }
 }

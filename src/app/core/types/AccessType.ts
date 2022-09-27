@@ -1,1 +1,1 @@
-export type AccessType = 'Administrador' | 'Usuário';
+export type AccessType = 'admin' | 'user';

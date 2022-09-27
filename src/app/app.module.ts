@@ -3,19 +3,23 @@ import { NgModule } from '@angular/core';
 import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AuthModule } from './core/modules/auth/auth.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
+import { ComponentsModule } from './core/components/components.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from './shared/material/material.module';
 import { SharedModule } from './shared/shared.module';
+import { StoreModule } from '@ngrx/store';
+
+import { AppComponent } from './app.component';
 import { HomeComponent } from './core/pages/home';
 import { NotFoundComponent } from './core/pages/not-found';
-import { AuthModule } from './core/modules/auth/auth.module';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { StoreModule } from '@ngrx/store';
-import { MaterialModule } from './shared/material/material.module';
 import { PostsComponent } from './core/pages/posts';
 import { UsersComponent } from './core/pages/users';
 import { SettingsComponent } from './core/pages/settings/settings.component';
-import { ComponentsModule } from './core/components/components.module';
+import { UsersFormComponent } from './core/pages/users/users-form';
+import { PostFormComponent } from './core/pages/posts/post-form';
 
 @NgModule({
   declarations: [
@@ -25,6 +29,8 @@ import { ComponentsModule } from './core/components/components.module';
     PostsComponent,
     UsersComponent,
     SettingsComponent,
+    UsersFormComponent,
+    PostFormComponent,
   ],
   imports: [
     SharedModule,
@@ -34,6 +40,8 @@ import { ComponentsModule } from './core/components/components.module';
     BrowserAnimationsModule,
     MaterialModule,
     ComponentsModule,
+    FormsModule,
+    ReactiveFormsModule,
 
     ToastrModule.forRoot(),
     StoreModule.forRoot({}),

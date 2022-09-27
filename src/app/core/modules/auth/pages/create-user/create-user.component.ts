@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { User } from 'src/app/core/models/User';
+import { LoaderService } from 'src/app/core/services/loader';
 import { NotificationService } from 'src/app/core/services/notification';
 import { AccessType } from 'src/app/core/types/AccessType';
 import { FormValidator } from 'src/app/core/utils/form-validators';
@@ -24,6 +25,7 @@ export class CreateUserComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private loader: LoaderService,
     private authService: AuthService,
     private notification: NotificationService
   ) {}
@@ -77,7 +79,7 @@ export class CreateUserComponent implements OnInit {
     };
   }
 
-  private getAccessType(): AccessType {
+  private getAccessType(): string {
     const accessType = this.form.get('accessType')?.value;
 
     return accessType === 'admin' ? 'Administrador' : 'Usuário';
@@ -86,6 +88,8 @@ export class CreateUserComponent implements OnInit {
   private createUser(): void {
     const accessType = this.getAccessType();
     this.loading = true;
+
+    this.loader.show(`Cadastrando ${accessType}...`);
 
     this.authService
       .createUser(this.getCreateUserPayload())
@@ -99,6 +103,7 @@ export class CreateUserComponent implements OnInit {
         error: () => {
           this.loading = false;
         },
-      });
+      })
+      .add(() => this.loader.hide());
   }
 }

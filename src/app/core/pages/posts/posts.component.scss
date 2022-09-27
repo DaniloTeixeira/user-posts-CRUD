@@ -1,0 +1,35 @@
+.title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+table {
+  min-width: 80vw;
+  max-width: 90vw;
+  margin: 0 auto;
+  border-radius: 5px;
+  overflow: hidden !important;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+tr.mat-row {
+  height: unset;
+}
+
+td.mat-cell {
+  padding: 5px;
+  color: whitesmoke;
+}
+
+td.mat-cell.no-data-row {
+  text-align: center;
+}
+
+.add-icon {
+  margin: 0 0 2px 2px;
+}

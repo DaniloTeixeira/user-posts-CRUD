@@ -1,0 +1,32 @@
+<h1 mat-dialog-title class="text-center">{{ title }} Postagem</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="form">
+  <div mat-dialog-content>
+    <mat-form-field appearance="fill" class="w-100">
+      <mat-label class="text-muted">Postagem</mat-label>
+      <input matInput type="text" formControlName="content" />
+      <mat-error *ngIf="form.controls.content.hasError('required')">
+        Campo obrigatório
+      </mat-error>
+      <mat-error *ngIf="form.controls.content.hasError('minlength')">
+        Insira ao menos 3 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-card-footer> </mat-card-footer>
+  </div>
+
+  <div mat-dialog-actions class="d-flex justify-content-between">
+    <button mat-stroked-button type="button" (click)="onCancel()">
+      Cancelar
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="this.form.invalid"
+    >
+      Salvar
+    </button>
+  </div>
+</form>
