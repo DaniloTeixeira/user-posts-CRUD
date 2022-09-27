@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subject, takeUntil } from 'rxjs';
-import { CreateOrEditPostPayload } from '../../models/CreateOrEditPostPayload';
 import { Post } from '../../models/Post';
 import { User } from '../../models/User';
 import { LoaderService } from '../../services/loader';
@@ -42,8 +41,8 @@ export class PostsComponent implements OnInit {
     this.destroyed$.complete();
   }
 
-  openDialog(post: Post): void {
-    // TODO -> Validar se é administrador
+  openDialog(post?: Post): void {
+    // TODO -> Validar se é usuário
 
     const data: any = {
       post: post,
@@ -68,22 +67,6 @@ export class PostsComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.posts.filter = filterValue.trim().toLowerCase();
-  }
-
-  createPost(id: number, content: CreateOrEditPostPayload): void {
-    this.loader.show('Publicando postagem...');
-
-    this.postService
-      .createPost(id, content)
-      .pipe(takeUntil(this.destroyed$))
-      .subscribe({
-        next: (response) => this.notification.success(response),
-        error: () =>
-          this.notification.info(
-            'Ops... Erro ao criar postagem. Tente novamente.'
-          ),
-      })
-      .add(() => this.loader.hide());
   }
 
   deletePost(post: Post): void {

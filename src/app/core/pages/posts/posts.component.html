@@ -2,8 +2,15 @@
   class="title-container d-flex justify-content-between align-items-center mx-1"
 >
   <h3 class="text-center text-muted fw-bold">Postagens</h3>
-  <button mat-fab color="primary" matTooltip="Adicionar usuário">
-    <mat-icon fontSet="material-icons-outlined">post_add</mat-icon>
+  <button
+    mat-mini-fab
+    color="primary"
+    matTooltip="Adicionar postagem"
+    (click)="openDialog()"
+  >
+    <mat-icon class="add-icon" fontSet="material-icons-outlined"
+      >post_add</mat-icon
+    >
   </button>
 </div>
 
@@ -44,7 +51,7 @@
           style="color: #3366ff"
           type="button"
           (click)="openDialog(post)"
-          matTooltip="Editar usuário"
+          matTooltip="Editar postagem"
         >
           <mat-icon fontSet="material-icons-outlined">edit</mat-icon>
         </button>
@@ -54,7 +61,7 @@
           style="color: #e30d00"
           type="button"
           (click)="deletePost(post)"
-          matTooltip="Apagar usuáro"
+          matTooltip="Apagar postagem"
         >
           <mat-icon fontSet="material-icons-outlined">delete</mat-icon>
         </button>

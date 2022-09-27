@@ -3,11 +3,11 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  NonNullableFormBuilder,
   Validators,
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
-import { CreateOrEditPostPayload } from 'src/app/core/models/CreateOrEditPostPayload';
 import { Post } from 'src/app/core/models/Post';
 import { LoaderService } from 'src/app/core/services/loader';
 import { NotificationService } from 'src/app/core/services/notification';
@@ -21,27 +21,37 @@ import { UserService } from 'src/app/core/services/user';
 })
 export class PostFormComponent implements OnInit {
   form?: FormGroup<{
-    content: FormControl<string | null>;
+    content: FormControl<string>;
   }>;
 
-  post!: Post;
+  post?: Post;
 
   destroyed$ = new Subject<void>();
+
+  mode: 'publish' | 'edit' = 'publish';
 
   constructor(
     @Inject(MAT_DIALOG_DATA) data: any,
     private dialogRef: MatDialogRef<number>,
-    private fb: FormBuilder,
+    private fb: NonNullableFormBuilder,
     private loader: LoaderService,
     private postService: PostService,
     private notification: NotificationService
   ) {
     this.post = data.post;
+    this.mode = data.post ? 'edit' : 'publish';
+  }
+
+  get title(): string {
+    return this.mode === 'publish' ? 'Publicar' : 'Editar';
   }
 
   ngOnInit(): void {
     this.buildForm();
-    this.fillform();
+
+    if (this.mode === 'edit') {
+      this.fillform();
+    }
   }
 
   ngOnDestroy(): void {
@@ -54,7 +64,12 @@ export class PostFormComponent implements OnInit {
       return;
     }
 
-    this.editPost();
+    if (this.mode === 'edit') {
+      this.editPost();
+      return;
+    }
+
+    this.createPost();
   }
 
   onCancel(): void {
@@ -65,36 +80,52 @@ export class PostFormComponent implements OnInit {
     this.form = this.fb.group({
       content: this.fb.control('', [
         Validators.required,
-        Validators.minLength(5),
+        Validators.minLength(3),
       ]),
     });
   }
 
   private noDataChanged(post: any): boolean {
-    return post.content === this.post.content;
+    return post.content === this.post!.content;
   }
 
   private fillform(): void {
     this.form?.patchValue({
-      content: this.post.content,
+      content: this.post!.content,
     });
   }
 
-  private getEditPostPayload(): CreateOrEditPostPayload {
-    const form = this.form?.getRawValue();
+  createPost(): void {
+    const id = 1; // TODO -> Pegar o id do usuário logado
+    const payload = this.form!.value as string;
 
-    return {
-      content: form!.content!.trim(),
-    };
+    this.loader.show('Publicando postagem...');
+
+    this.postService
+      .createPost(id, payload)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe({
+        next: () => {
+          this.notification.success('Postagem publicada com sucesso!');
+
+          this.dialogRef.close({
+            reload: true,
+          });
+        },
+        error: () =>
+          this.notification.info(
+            'Ops... Erro ao publicar postagem. Tente novamente.'
+          ),
+      })
+      .add(() => this.loader.hide());
   }
 
   private editPost(): void {
-    const id = this.post.id;
-    const payload = this.getEditPostPayload();
-    const noDataChanged = this.noDataChanged(payload);
+    const id = this.post!.id;
+    const payload = this.form!.value as string;
 
-    if (noDataChanged) {
-      this.notification.info('Altere algum dado para prosseguir.');
+    if (this.noDataChanged(payload)) {
+      this.notification.info('Altere alguma informação para continuar');
       return;
     }
 
