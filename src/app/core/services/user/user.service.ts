@@ -19,7 +19,7 @@ export class UserService {
     return this.http.get<User[]>(url).pipe(delay(500));
   }
 
-  getUser(id: number): Observable<User> {
+  getUserById(id: number): Observable<User> {
     const url = `${this.baseURL}/${id}`;
 
     return this.http.get<User>(url).pipe(delay(500));

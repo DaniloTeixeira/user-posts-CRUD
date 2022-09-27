@@ -1,4 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Subject, takeUntil } from 'rxjs';
+import { CreateOrEditPostPayload } from 'src/app/core/models/CreateOrEditPostPayload';
+import { Post } from 'src/app/core/models/Post';
+import { LoaderService } from 'src/app/core/services/loader';
+import { NotificationService } from 'src/app/core/services/notification';
+import { PostService } from 'src/app/core/services/post';
+import { UserService } from 'src/app/core/services/user';
 
 @Component({
   selector: 'app-post-form',
@@ -7,11 +21,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostFormComponent implements OnInit {
   form?: FormGroup<{
-    name: FormControl<string | null>;
-    email: FormControl<string | null>;
+    content: FormControl<string | null>;
   }>;
 
-  user!: User;
+  post!: Post;
 
   destroyed$ = new Subject<void>();
 
@@ -20,10 +33,10 @@ export class PostFormComponent implements OnInit {
     private dialogRef: MatDialogRef<number>,
     private fb: FormBuilder,
     private loader: LoaderService,
-    private userService: UserService,
+    private postService: PostService,
     private notification: NotificationService
   ) {
-    this.user = data.user;
+    this.post = data.post;
   }
 
   ngOnInit(): void {
@@ -41,7 +54,7 @@ export class PostFormComponent implements OnInit {
       return;
     }
 
-    this.editUser();
+    this.editPost();
   }
 
   onCancel(): void {
@@ -50,34 +63,35 @@ export class PostFormComponent implements OnInit {
 
   private buildForm(): void {
     this.form = this.fb.group({
-      name: this.fb.control('', [Validators.required, Validators.minLength(3)]),
-      email: this.fb.control('', [Validators.required, Validators.email]),
+      content: this.fb.control('', [
+        Validators.required,
+        Validators.minLength(5),
+      ]),
     });
   }
 
-  private noDataChanged(user: any): boolean {
-    return user.name === this.user.name && user.email === this.user.email;
+  private noDataChanged(post: any): boolean {
+    return post.content === this.post.content;
   }
 
   private fillform(): void {
     this.form?.patchValue({
-      name: this.user.name,
-      email: this.user.email,
+      content: this.post.content,
     });
   }
 
-  private getEditUserPayload(): EditUserPayload {
+  private getEditPostPayload(): CreateOrEditPostPayload {
     const form = this.form?.getRawValue();
 
     return {
-      name: form!.name!.trim(),
-      email: form!.email!.trim(),
+      content: form!.content!.trim(),
     };
   }
 
-  private editUser(): void {
-    const id = this.user.id;
-    const payload = this.getEditUserPayload();
+  private editPost(): void {
+    debugger;
+    const id = this.post.id;
+    const payload = this.getEditPostPayload();
     const noDataChanged = this.noDataChanged(payload);
 
     if (noDataChanged) {
@@ -85,14 +99,14 @@ export class PostFormComponent implements OnInit {
       return;
     }
 
-    this.loader.show('Alterando dados do usuário...');
+    this.loader.show('Alterando dados da postagem...');
 
-    this.userService
-      .editUser(id, payload)
+    this.postService
+      .editPost(id, payload)
       .pipe(takeUntil(this.destroyed$))
       .subscribe({
         next: () => {
-          this.notification.success('Usuário alterado com sucesso!');
+          this.notification.success('Postagem alterada com sucesso!');
 
           this.dialogRef.close({
             reload: true,
@@ -100,7 +114,7 @@ export class PostFormComponent implements OnInit {
         },
         error: () =>
           this.notification.info(
-            'Ops... Erro ao atualizar usuário. Tente novamente.'
+            'Ops... Erro ao atualizar postagem. Tente novamente.'
           ),
       })
       .add(() => this.loader.hide());

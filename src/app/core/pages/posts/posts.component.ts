@@ -2,9 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subject, takeUntil } from 'rxjs';
+import { CreateOrEditPostPayload } from '../../models/CreateOrEditPostPayload';
 import { Post } from '../../models/Post';
+import { User } from '../../models/User';
 import { LoaderService } from '../../services/loader';
 import { NotificationService } from '../../services/notification';
+import { PostService } from '../../services/post';
 import { UserService } from '../../services/user';
 import { PostFormComponent } from './post-form/post-form.component';
 
@@ -16,7 +19,7 @@ import { PostFormComponent } from './post-form/post-form.component';
 export class PostsComponent implements OnInit {
   posts = new MatTableDataSource<Post>();
 
-  displayedColumns = ['id', 'content', 'user', 'actions'];
+  displayedColumns = ['id', 'content', 'user', 'createdAt', 'actions'];
 
   destroyed$ = new Subject<void>();
 
@@ -26,11 +29,12 @@ export class PostsComponent implements OnInit {
     private dialog: MatDialog,
     private loader: LoaderService,
     private userService: UserService,
+    private postService: PostService,
     private notification: NotificationService
   ) {}
 
   ngOnInit(): void {
-    this.getUsers();
+    this.getPosts();
   }
 
   ngOnDestroy(): void {
@@ -56,26 +60,42 @@ export class PostsComponent implements OnInit {
       .pipe(takeUntil(this.destroyed$))
       .subscribe((params) => {
         if (params?.reload) {
-          this.getUsers();
+          this.getPosts();
         }
       });
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.users.filter = filterValue.trim().toLowerCase();
+    this.posts.filter = filterValue.trim().toLowerCase();
   }
 
-  deleteUser(post: Post): void {
-    this.loader.show('Apagando postagem...');
+  createPost(id: number, content: CreateOrEditPostPayload): void {
+    this.loader.show('Publicando postagem...');
 
-    this.userService
-      .deleteUser(post.id)
+    this.postService
+      .createPost(id, content)
       .pipe(takeUntil(this.destroyed$))
       .subscribe({
-        next: () => {
-          this.notification.success('Postagem apagada com sucesso!');
-          this.getUsers();
+        next: (response) => this.notification.success(response),
+        error: () =>
+          this.notification.info(
+            'Ops... Erro ao criar postagem. Tente novamente.'
+          ),
+      })
+      .add(() => this.loader.hide());
+  }
+
+  deletePost(post: Post): void {
+    this.loader.show('Apagando postagem...');
+
+    this.postService
+      .deletePost(post.id)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe({
+        next: (response) => {
+          this.notification.success(response);
+          this.getPosts();
         },
         error: () =>
           this.notification.info(
@@ -85,11 +105,11 @@ export class PostsComponent implements OnInit {
       .add(() => this.loader.hide());
   }
 
-  private getUsers(): void {
+  private getPosts(): void {
     this.loader.show('Buscando postagens...');
 
-    this.userService
-      .getUsers()
+    this.postService
+      .getPosts()
       .pipe(takeUntil(this.destroyed$))
       .subscribe({
         next: (posts) => {
