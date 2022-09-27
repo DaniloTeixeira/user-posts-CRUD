@@ -93,8 +93,8 @@ export class PostsComponent implements OnInit {
       .deletePost(post.id)
       .pipe(takeUntil(this.destroyed$))
       .subscribe({
-        next: (response) => {
-          this.notification.success(response);
+        next: () => {
+          this.notification.success('Postagem apagada com sucesso!');
           this.getPosts();
         },
         error: () =>

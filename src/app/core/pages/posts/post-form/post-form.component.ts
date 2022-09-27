@@ -89,7 +89,6 @@ export class PostFormComponent implements OnInit {
   }
 
   private editPost(): void {
-    debugger;
     const id = this.post.id;
     const payload = this.getEditPostPayload();
     const noDataChanged = this.noDataChanged(payload);
@@ -112,10 +111,11 @@ export class PostFormComponent implements OnInit {
             reload: true,
           });
         },
-        error: () =>
+        error: () => {
           this.notification.info(
             'Ops... Erro ao atualizar postagem. Tente novamente.'
-          ),
+          );
+        },
       })
       .add(() => this.loader.hide());
   }

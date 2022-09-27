@@ -38,7 +38,7 @@ export class PostService {
   ): Observable<CreatePostResponse> {
     const url = `${this.baseURL}/${id}`;
 
-    return this.http.post<CreatePostResponse>(url, content).pipe(delay(500));
+    return this.http.put<CreatePostResponse>(url, content).pipe(delay(500));
   }
 
   deletePost(id: number): Observable<string> {
