@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { delay, Observable } from 'rxjs';
 import endpoints from 'src/environments/endpoints';
-import { EditUserPayload } from '../../models/EditUserPayload';
-import { User } from '../../models/User';
+import { EditUserPayload } from '../../interfaces/EditUserPayload';
+import { User } from '../../interfaces/User';
+import { SignOnPayload } from '../../interfaces/SignOnPayload';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,12 @@ export class UserService {
   private baseURL = endpoints.user;
 
   constructor(private http: HttpClient) {}
+
+  createUser(payload: SignOnPayload): Observable<User> {
+    const url = `${this.baseURL}/create-user`;
+
+    return this.http.post<User>(url, payload);
+  }
 
   getUsers(): Observable<User[]> {
     const url = `${this.baseURL}s`;

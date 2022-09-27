@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import { Subject, takeUntil } from 'rxjs';
 
-import { User } from '../../models/User';
+import { User } from '../../interfaces/User';
 
 import { LoaderService } from '../../services/loader';
 import { NotificationService } from '../../services/notification';

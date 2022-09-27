@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
-import { Post } from 'src/app/core/models/Post';
+import { Post } from 'src/app/core/interfaces/Post';
 import { LoaderService } from 'src/app/core/services/loader';
 import { NotificationService } from 'src/app/core/services/notification';
 import { PostService } from 'src/app/core/services/post';

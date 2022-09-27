@@ -1,6 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
+import { LoaderService } from 'src/app/core/services/loader';
+import { NotificationService } from 'src/app/core/services/notification';
+import { SignInResponse } from '../../interfaces/SignInResponse';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-login',
@@ -12,22 +16,33 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   hide = true;
   loaded = true;
+  loggedUser?: SignInResponse;
 
-  destroy$ = new Subject<void>();
+  destroyed$ = new Subject<void>();
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private loader: LoaderService,
+    private notification: NotificationService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.buildForm();
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 
   onSubmit(): void {
-    console.log(this.getLoginPayload());
+    if (this.form.invalid) {
+      this.notification.info('Preencha o e-mail e senha para continuar.');
+      return;
+    }
+
+    this.signIn();
   }
 
   toggleShowPass(): void {
@@ -41,7 +56,25 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getLoginPayload(): any {
+  private getSignInPayload(): any {
     return this.form.getRawValue();
+  }
+
+  private signIn(): void {
+    const payload = this.getSignInPayload();
+
+    this.loader.show('Entrando...');
+
+    this.authService
+      .signIn(payload)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe({
+        next: (userInfo) => {
+          this.loggedUser = userInfo;
+          this.notification.success('Login efetuado com sucesso!');
+        },
+        error: ({ error }) => this.notification.info(error.error),
+      })
+      .add(() => this.loader.hide());
   }
 }

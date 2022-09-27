@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { delay, Observable } from 'rxjs';
 import endpoints from 'src/environments/endpoints';
-import { CreatePostResponse } from '../../models/CreatePostResponse';
-import { Post } from '../../models/Post';
+import { CreatePostResponse } from '../../interfaces/CreatePostResponse';
+import { Post } from '../../interfaces/Post';
 
 @Injectable({
   providedIn: 'root',

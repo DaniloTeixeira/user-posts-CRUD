@@ -20,6 +20,8 @@ import { UsersComponent } from './core/pages/users';
 import { SettingsComponent } from './core/pages/settings/settings.component';
 import { UsersFormComponent } from './core/pages/users/users-form';
 import { PostFormComponent } from './core/pages/posts/post-form';
+import { metaReducers } from './core/store/meta-reducers';
+import { authReducer } from './core/store/auth/auth.reducers';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,8 @@ import { PostFormComponent } from './core/pages/posts/post-form';
 
     ToastrModule.forRoot(),
     StoreModule.forRoot({}),
+
+    StoreModule.forRoot({ auth: authReducer }, { metaReducers }),
   ],
   providers: [],
   bootstrap: [AppComponent],
