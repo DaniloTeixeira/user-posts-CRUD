@@ -14,6 +14,7 @@ import {
   signOnError,
   signOnRequest,
   signOnSuccess,
+  signOut,
 } from './auth.actions';
 
 @Injectable()
@@ -83,6 +84,13 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(signInError),
       map(({ payload }) => showNotificationInfo({ payload }))
+    )
+  );
+
+  signOut$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(signOut),
+      tap(() => this.router.navigate(['autenticacao', 'entrar']))
     )
   );
 
