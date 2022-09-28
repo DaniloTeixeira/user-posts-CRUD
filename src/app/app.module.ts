@@ -25,6 +25,8 @@ import { authReducer } from './core/store/auth/auth.reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './core/store/auth/auth.effects';
 import { NotificationEffects } from './core/store/notification/notification.effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,7 @@ import { NotificationEffects } from './core/store/notification/notification.effe
 
     StoreModule.forRoot({ auth: authReducer }, { metaReducers }),
     EffectsModule.forRoot([AuthEffects, NotificationEffects]),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   providers: [],
   bootstrap: [AppComponent],
