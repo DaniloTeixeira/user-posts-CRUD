@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 import { LoaderService } from 'src/app/core/services/loader';
 import { NotificationService } from 'src/app/core/services/notification';
+import { signInRequest } from 'src/app/core/store/auth/auth.actions';
 import { SignInResponse } from '../../interfaces/SignInResponse';
 import { AuthService } from '../../services/auth';
 
@@ -21,6 +23,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   destroyed$ = new Subject<void>();
 
   constructor(
+    private store: Store,
     private fb: FormBuilder,
     private loader: LoaderService,
     private notification: NotificationService,
@@ -42,7 +45,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.signIn();
+    this.signInRequest();
   }
 
   toggleShowPass(): void {
@@ -56,25 +59,23 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getSignInPayload(): any {
-    return this.form.getRawValue();
-  }
+  private signInRequest(): void {
+    const payload = this.form!.value;
 
-  private signIn(): void {
-    const payload = this.getSignInPayload();
+    this.store.dispatch(signInRequest({ payload }));
 
-    this.loader.show('Entrando...');
+    // this.loader.show('Entrando...');
 
-    this.authService
-      .signIn(payload)
-      .pipe(takeUntil(this.destroyed$))
-      .subscribe({
-        next: (userInfo) => {
-          this.loggedUser = userInfo;
-          this.notification.success('Login efetuado com sucesso!');
-        },
-        error: ({ error }) => this.notification.info(error.error),
-      })
-      .add(() => this.loader.hide());
+    // this.authService
+    //   .signIn(payload)
+    //   .pipe(takeUntil(this.destroyed$))
+    //   .subscribe({
+    //     next: (userInfo) => {
+    //       this.loggedUser = userInfo;
+    //       this.notification.success('Login efetuado com sucesso!');
+    //     },
+    //     error: ({ error }) => this.notification.info(error.error),
+    //   })
+    //   .add(() => this.loader.hide());
   }
 }

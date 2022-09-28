@@ -8,6 +8,8 @@ import { UserService } from '../../services/user';
 import {
   showNotificationInfo,
   showNotificationSuccess,
+} from '../notification/notification.actions';
+import {
   signInError,
   signInRequest,
   signInSuccess,
@@ -26,7 +28,7 @@ export class AuthEffects {
       switchMap((action) =>
         this.userService.createUser(action.payload).pipe(
           map(() => signOnSuccess()),
-          catchError(({ e }) => of(signOnError({ payload: e.error })))
+          catchError(({ error }) => of(signOnError({ payload: error.error })))
         )
       )
     )
@@ -57,7 +59,7 @@ export class AuthEffects {
       switchMap(({ payload }) =>
         this.authService.signIn(payload).pipe(
           map((response) => signInSuccess({ payload: response })),
-          catchError(({ e }) => of(signInError({ payload: e.error })))
+          catchError(({ error }) => of(signInError({ payload: error.error })))
         )
       ),
       tap(() => this.loader.hide())
@@ -75,7 +77,7 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(signInSuccess),
-        tap(() => this.router.navigate(['home']))
+        tap(() => this.router.navigate(['inicio']))
       ),
     { dispatch: false }
   );

@@ -5,7 +5,7 @@ const localStorageSyncReducer = (
   reducer: ActionReducer<any>
 ): ActionReducer<any> =>
   localStorageSync({
-    keys: ['core', 'auth'],
+    keys: ['auth'],
     syncCondition: () => true,
     rehydrate: true,
   })(reducer);

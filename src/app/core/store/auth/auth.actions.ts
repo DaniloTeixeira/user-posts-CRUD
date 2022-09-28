@@ -1,9 +1,10 @@
 import { createAction, props } from '@ngrx/store';
 import { Prop } from 'src/app/core/interfaces/Prop';
 import { SignOnPayload } from '../../interfaces/SignOnPayload';
+import { SignInPayload } from '../../modules/auth/interfaces/SignInPayload';
 import { SignInResponse } from '../../modules/auth/interfaces/SignInResponse';
 
-export enum AuthActions {
+enum AuthActions {
   SignOnRequest = '[Auth] sign On Request',
   SignOnSuccess = '[Auth] sign On Success',
   SignOnError = '[Auth] sign On Error',
@@ -15,10 +16,6 @@ export enum AuthActions {
   SignOut = '[Auth] Logout',
 
   ClearAuthState = '[Auth] Clear Auth State',
-
-  ShowNotificationSuccess = '[Auth] Show Notification Success',
-  ShowNotificationInfo = '[Auth] Show Notification Info',
-  ShowNotificationConfirm = '[Auth] Show Notification Confirm',
 }
 
 export const signOnRequest = createAction(
@@ -35,7 +32,7 @@ export const signOnError = createAction(
 
 export const signInRequest = createAction(
   AuthActions.SignInRequest,
-  props<Prop<SignOnPayload>>()
+  props<Prop<SignInPayload>>()
 );
 
 export const signInSuccess = createAction(
@@ -51,18 +48,3 @@ export const signInError = createAction(
 export const signOut = createAction(AuthActions.SignOut);
 
 export const clearAuthState = createAction(AuthActions.ClearAuthState);
-
-export const showNotificationSuccess = createAction(
-  AuthActions.ShowNotificationSuccess,
-  props<Prop<string>>()
-);
-
-export const showNotificationInfo = createAction(
-  AuthActions.ShowNotificationInfo,
-  props<Prop<string>>()
-);
-
-export const showNotificationConfirm = createAction(
-  AuthActions.ShowNotificationConfirm,
-  props<Prop<string>>()
-);
