@@ -20,7 +20,11 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": ["lodash", "sweetalert2"],
+            "allowedCommonJsDependencies": [
+              "lodash",
+              "sweetalert2",
+              "deepmerge"
+            ],
             "outputPath": "dist/auth-crud-angular",
             "index": "src/index.html",
             "main": "src/main.ts",

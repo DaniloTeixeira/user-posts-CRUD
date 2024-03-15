@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { User } from 'src/app/core/models/User';
+import { User } from 'src/app/core/interfaces/User';
 import { LoaderService } from 'src/app/core/services/loader';
 import { NotificationService } from 'src/app/core/services/notification';
-import { AccessType } from 'src/app/core/types/AccessType';
+import { UserService } from 'src/app/core/services/user';
 import { FormValidator } from 'src/app/core/utils/form-validators';
-import { CreateUserPayload } from '../../interfaces/CreateUserPayload';
+import { SignOnPayload } from '../../../../interfaces/SignOnPayload';
 import { AuthService } from '../../services/auth';
 
 @Component({
@@ -26,7 +26,7 @@ export class CreateUserComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private loader: LoaderService,
-    private authService: AuthService,
+    private userService: UserService,
     private notification: NotificationService
   ) {}
 
@@ -68,7 +68,7 @@ export class CreateUserComponent implements OnInit {
     });
   }
 
-  private getCreateUserPayload(): CreateUserPayload {
+  private getCreateUserPayload(): SignOnPayload {
     const form = this.form.getRawValue();
 
     return {
@@ -91,7 +91,7 @@ export class CreateUserComponent implements OnInit {
 
     this.loader.show(`Cadastrando ${accessType}...`);
 
-    this.authService
+    this.userService
       .createUser(this.getCreateUserPayload())
       .pipe(takeUntil(this.destroy$))
       .subscribe({

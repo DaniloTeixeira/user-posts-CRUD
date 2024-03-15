@@ -1,6 +1,6 @@
 import { AccessType } from 'src/app/core/types/AccessType';
 
-export interface CreateUserPayload {
+export interface SignOnPayload {
   name: string;
   email: string;
   password: string;

@@ -20,6 +20,13 @@ import { UsersComponent } from './core/pages/users';
 import { SettingsComponent } from './core/pages/settings/settings.component';
 import { UsersFormComponent } from './core/pages/users/users-form';
 import { PostFormComponent } from './core/pages/posts/post-form';
+import { metaReducers } from './core/store/meta-reducers';
+import { authReducer } from './core/store/auth/auth.reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './core/store/auth/auth.effects';
+import { NotificationEffects } from './core/store/notification/notification.effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -44,7 +51,10 @@ import { PostFormComponent } from './core/pages/posts/post-form';
     ReactiveFormsModule,
 
     ToastrModule.forRoot(),
-    StoreModule.forRoot({}),
+
+    StoreModule.forRoot({ auth: authReducer }, { metaReducers }),
+    EffectsModule.forRoot([AuthEffects, NotificationEffects]),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   providers: [],
   bootstrap: [AppComponent],
